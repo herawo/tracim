@@ -122,6 +122,11 @@
                         <li class="header__navbar__list__item">
                             <a href="${tg.url('/calendar')}">${TIM.FA('fa-calendar')} ${_('Calendar')}</a>
                         </li>
+                        <li class="btn-group btn-group-vertical">
+                            <a title="Administrer" class="workspace__detail__sidebar-right__btnadministrate">
+                                ${TIM.FA('t-less-visible fa fa-group')} ${_('Administrer')}
+                            </a>
+                        </li>
                         ${NAVBAR_MENU.ADMIN_ITEMS()}
                     </ul>
                 % endif
@@ -166,7 +171,7 @@
                             </li>
                         % endif
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="header__navbar__right__user dropdown-toggle" data-toggle="dropdown">
                                 ${TIM.FA('fa-lg fa-user')} ${fake_api.current_user.name}
 
                             </a>

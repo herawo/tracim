@@ -44,4 +44,13 @@ $(document).ready(function () {
     })
   }
 
+  // btn to display the workspace manager in template/workspace/get_one.mak
+  $('.workspace__detail__sidebar-right__btnadministrate').click(function () {
+    $('#workspace_manager').css('display', 'block')
+  })
+
+  $('#modalWorkspaceManagerBtnClose').click(function () {
+    $('#workspace_manager').css('display', 'none')
+  })
+
 })

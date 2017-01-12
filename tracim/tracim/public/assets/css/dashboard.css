@@ -131,6 +131,9 @@ body {
     background-color: #eee;
     color: #333;
 }
+.header__navbar__right__user {
+  margin-right: 15px;
+}
 
 /*
  * Main content
@@ -516,4 +519,8 @@ table th {
 
 div.mce-fullscreen {
   z-index: 1030;
+}
+
+#workspace_manager {
+  display: none;
 }

@@ -22,3 +22,13 @@
     </div> <!-- # End of side bar right -->
     ## SIDEBAR RIGHT [END]
 </%def>
+
+
+<%def name="SECURED_WORKSPACE(user, workspace)">
+    <div class="btn-group btn-group-vertical">
+        <a title="Administrer" class="workspace__detail__sidebar-right__btnadministrate btn btn-default">
+            ${ICON.FA_FW('t-less-visible fa fa-group')}
+            ${_('Administrer')}
+        </a>
+    </div>
+</%def>
