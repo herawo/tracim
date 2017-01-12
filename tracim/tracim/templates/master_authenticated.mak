@@ -122,9 +122,9 @@
                         <li class="header__navbar__list__item">
                             <a href="${tg.url('/calendar')}">${TIM.FA('fa-calendar')} ${_('Calendar')}</a>
                         </li>
-                        <li class="btn-group btn-group-vertical">
+                        <li class="header__navbar__list__item">
                             <a title="Administrer" class="workspace__detail__sidebar-right__btnadministrate">
-                                ${TIM.FA('t-less-visible fa fa-group')} ${_('Administrer')}
+                                ${TIM.FA('fa fa-group')} ${_('Administrer')}
                             </a>
                         </li>
                         ${NAVBAR_MENU.ADMIN_ITEMS()}

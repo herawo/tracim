@@ -5,7 +5,10 @@
 <%def name="ICO_TOOLTIP(icon_size, icon_path, title='')"><span rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="${title}">${ICO(icon_size, icon_path, title)}</span></%def>
 <%def name="ICO_BADGED(icon_size, icon_path, title='', css_class='badge')"><span class="${css_class}" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="${title}">${ICO(icon_size, icon_path, title)}</span></%def>
 <%def name="ICO_FA_BADGED(fa_class='fa fa-flag', title='', css_style='')"><i style="${css_style}" class="${fa_class}" rel="tooltip" data-toggle="tooltip" data-placement="bottom" title="${title}"></i></%def>
-<%def name="FA(fa_class='fa-flag', title='', css_style='', color='auto')"><i style="color: ${color}; ${css_style}" class="fa ${fa_class}" title="${title}"></i></%def>
+
+<%def name="FA(fa_class='fa-flag', title='', css_style='', color='auto')">
+    <i style="color: ${color}; ${css_style}" class="fa ${fa_class}" title="${title}"></i>
+</%def>
 
 <%def name="HELP_MODAL_DIALOG(help_page)"><div id="help-modal-dialog-${help_page}" class="modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"></div></div></div></%def>
 
