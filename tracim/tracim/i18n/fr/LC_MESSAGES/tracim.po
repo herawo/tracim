@@ -842,6 +842,10 @@ msgstr "Créez votre propre espace de travail collaboratif sur trac.im"
 msgid "My Home"
 msgstr "Accueil"
 
+#: tracim/templates/master_authenticated.mak
+msgid "Administrate"
+msgstr "Administrer"
+
 #: tracim/templates/master_authenticated.mak:114
 #: tracim/templates/admin/workspace_getall.mak:85
 #: tracim/templates/admin/workspace_getone.mak:56

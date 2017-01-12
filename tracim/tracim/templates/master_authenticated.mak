@@ -124,7 +124,7 @@
                         </li>
                         <li class="header__navbar__list__item">
                             <a title="Administrer" class="workspace__detail__sidebar-right__btnadministrate">
-                                ${TIM.FA('fa fa-group')} ${_('Administrer')}
+                                ${TIM.FA('fa fa-group')} ${_('Administrate')}
                             </a>
                         </li>
                         ${NAVBAR_MENU.ADMIN_ITEMS()}

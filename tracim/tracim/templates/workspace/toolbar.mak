@@ -26,9 +26,9 @@
 
 <%def name="SECURED_WORKSPACE(user, workspace)">
     <div class="btn-group btn-group-vertical">
-        <a title="Administrer" class="workspace__detail__sidebar-right__btnadministrate btn btn-default">
+        <a title="${_('Administrate')}" class="workspace__detail__sidebar-right__btnadministrate btn btn-default">
             ${ICON.FA_FW('t-less-visible fa fa-group')}
-            ${_('Administrer')}
+            ${_('Administrate')}
         </a>
     </div>
 </%def>
