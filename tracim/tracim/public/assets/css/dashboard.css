@@ -482,6 +482,9 @@ span.info.readonly {
 .workspace__detail__wrapper {
   padding: 0 15px;
 }
+.workspace__detail__sidebar-right__btnadministrate {
+  cursor: pointer;
+}
 
 .content__detail {
   padding: 0 15px;

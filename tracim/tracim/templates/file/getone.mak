@@ -28,6 +28,8 @@
 <%def name="REQUIRED_DIALOGS()">
     ${TIM.MODAL_DIALOG('file-edit-modal-dialog', 'modal-lg')}
     ${TIM.HELP_MODAL_DIALOG('content-wiki-page-definition')}
+    <div id="workspace_manager" configPath="${tg.url('/assets/workspace_manager/temp_fake_config.json')}"></div>
+    <script id="workspace_manager_script" src="${tg.url('/assets/workspace_manager/workspace_manager_bundle.js')}"></script>
 </%def>
 
 ############################################################################

@@ -31,6 +31,8 @@
     ${TIM.MODAL_DIALOG('page-new-modal-dialog')}
     ${TIM.MODAL_DIALOG('thread-new-modal-dialog')}
     ## TODO-DYNAMIC-CONTENT-HERE
+    <div id="workspace_manager" configPath="${tg.url('/assets/workspace_manager/temp_fake_config.json')}"></div>
+    <script id="workspace_manager_script" src="${tg.url('/assets/workspace_manager/workspace_manager_bundle.js')}"></script>
 </%def>
 
 ############################################################################
