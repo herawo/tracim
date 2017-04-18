@@ -941,6 +941,7 @@ def serialize_role_in_workspace(role: UserRoleInWorkspace, context: Context):
     result['email'] = role.user.email
     result['user'] = context.toDict(role.user)
     result['notifications_subscribed'] = role.do_notify
+
     return result
 
 
@@ -1026,7 +1027,9 @@ def serialize_workspace_complete(workspace: pmd.Workspace, context: Context):
 
 @pod_serializer(Workspace, CTX.MENU_API)
 def serialize_workspace_for_menu_api(workspace: Workspace, context: Context):
+
     result = DictLikeClass(
+        # notification_nb = len(notifications),
         id = CST.TREEVIEW_MENU.ID_TEMPLATE__WORKSPACE_ONLY.format(workspace.workspace_id),
         children = True, # TODO: make this dynamic
         text = workspace.label,

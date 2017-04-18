@@ -896,9 +896,12 @@ class ContentApi(object):
         for item in itemset:
             self.mark_read(item, read_datetime, do_flush, recursive)
 
-    def mark_read(self, content: Content,
+    def mark_read(self,
+                  content: Content,
                   read_datetime: datetime=None,
-                  do_flush: bool=True, recursive: bool=True) -> Content:
+                  do_flush: bool=True,
+                  recursive: bool=True
+                  ) -> Content:
 
         assert self._user
         assert content
@@ -1123,3 +1126,6 @@ class ContentApi(object):
         return _('New folder {0}').format(
             query.count() + 1,
         )
+
+
+

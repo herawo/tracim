@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import datetime
 
+from builtins import print
 from nose.tools import eq_, ok_
 from nose.tools import raises
 

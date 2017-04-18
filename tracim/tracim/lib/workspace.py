@@ -11,8 +11,6 @@ from tracim.model.data import Workspace
 from tracim.model.data import UserRoleInWorkspace
 from tracim.model import DBSession
 
-__author__ = 'damien'
-
 
 class WorkspaceApi(object):
 
