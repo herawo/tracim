@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import tg
 from tg import expose
 from tg import flash
 from tg import lurl
@@ -13,7 +12,7 @@ from tg import url
 from tg.i18n import ugettext as _
 from tracim.controllers.api import APIController
 from tracim.controllers.content import ContentController
-
+from tracim.controllers.previews import PreviewsController
 from tracim.lib import CST
 from tracim.lib.base import logger
 from tracim.lib.user import CurrentUserGetterApi
@@ -35,7 +34,6 @@ from tracim.model.serializers import DictLikeClass
 from tracim.model.serializers import CTX
 from tracim.model.serializers import Context
 
-
 class RootController(StandardController):
     """
     The root controller for the tracim application.
@@ -50,10 +48,13 @@ class RootController(StandardController):
     must be wrapped around with :class:`tg.controllers.WSGIAppController`.
     """
 
+
     admin = AdminController()
     help = HelpController()
     calendar = CalendarController()
     calendar_config = CalendarConfigController()
+
+
 
     debug = DebugController()
     error = ErrorController()
@@ -62,6 +63,7 @@ class RootController(StandardController):
     # Rest controllers
     workspaces = UserWorkspaceRestController()
     user = UserRestController()
+    previews = PreviewsController()
 
     content = ContentController()
 

@@ -100,6 +100,10 @@
     % endif
 
     <div class="content__detail file">
+        <% preview_url = tg.url('/previews/{}/pages/{}'.format(result.file.id, 0)) %>
+        <div style="width: 15%;height: 15%">
+            <img src="${preview_url}" alt="Preview"  style="width:100%;height:100%;border:5px solid #606060;">
+        </div>
         <% download_url = tg.url('/workspaces/{}/folders/{}/files/{}/download?revision_id={}'.format(result.file.workspace.id, result.file.parent.id,result.file.id,result.file.selected_revision)) %>
         <div class="t-half-spacer-above download-file-button">
             <a style="" class="btn btn-default" tittle="${_('Download the file')}"
