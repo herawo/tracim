@@ -10,6 +10,7 @@ from babel.dates import format_datetime
 
 from datetime import datetime
 import tg
+from preview_generator.manager import PreviewManager
 from tg.i18n import ugettext as _
 from tg.util import LazyString
 from tracim.lib.base import logger

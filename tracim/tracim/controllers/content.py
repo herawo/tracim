@@ -1,4 +1,8 @@
 # -*- coding: utf-8 -*-
+from io import BytesIO
+
+from preview_generator.manager import PreviewManager
+
 __author__ = 'damien'
 
 import sys
@@ -184,6 +188,31 @@ class UserWorkspaceFolderFileRestController(TIMWorkspaceContentRestController):
     @tg.require(current_user_is_reader())
     @tg.expose('tracim.templates.file.getone')
     def get_one(self, file_id, revision_id=None):
+        user = tmpl_context.current_user
+        content_api = ContentApi(
+            user,
+            show_archived=True,
+            show_deleted=True,
+        )
+        file_content = content_api.get_one(file_id,
+                                           self._item_type).file_content
+        file_name = content_api.get_one(file_id, self._item_type).file_name
+        cache_path = '/home/alexis/Pictures/cache/'
+        file = BytesIO()
+        file.write(file_content)
+
+        with open('{}{}'.format(cache_path, file_name), 'wb') as temp_file:
+            file.seek(0, 0)
+            buffer = file.read(1024)
+            while buffer:
+                temp_file.write(buffer)
+                buffer = file.read(1024)
+
+        preview_manager = PreviewManager(cache_path, create_folder=True)
+        nb_page = preview_manager.get_nb_page(
+            file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
+        )
+
         file_id = int(file_id)
         user = tmpl_context.current_user
         workspace = tmpl_context.workspace
@@ -209,7 +238,17 @@ class UserWorkspaceFolderFileRestController(TIMWorkspaceContentRestController):
 
         dictified_file = Context(self._get_one_context,
                                  current_user=user).toDict(file, 'file')
-        return DictLikeClass(result = dictified_file, fake_api=fake_api)
+
+        url = []
+        for i in range(int(nb_page)):
+            url.append('/previews/{}/pages/{}'.format(file_id, i))
+
+        return DictLikeClass(
+            result=dictified_file,
+            fake_api=fake_api,
+            nb_page=nb_page,
+            url=url,
+        )
 
     @tg.require(current_user_is_reader())
     @tg.expose()

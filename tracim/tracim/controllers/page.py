@@ -1,7 +1,4 @@
-import os
-
 import tg
-from io import BytesIO
 from preview_generator.manager import PreviewManager
 from tg import expose, tmpl_context
 from tracim.controllers import TIMRestController
@@ -19,47 +16,90 @@ class PagesController(TIMRestController):
     @expose()
     def get_all(self, *args, **kwargs):
         file_id = int(tg.request.controller_state.routing_args.get('file_id'))
-        print('all the pages of document {}'.format(file_id))
         return 'all the pages of document {}'.format(file_id)
 
     @expose(content_type='image/jpeg')
     def get_one(self, page_id, *args, **kwargs):
         file_id = int(tg.request.controller_state.routing_args.get('file_id'))
+
+        # For now it's done through database content
+        # but soon it'll be with disk access
+
         user = tmpl_context.current_user
         content_api = ContentApi(
             user,
             show_archived=True,
             show_deleted=True,
         )
-        file_content = content_api.get_one(file_id, self._item_type).file_content
         file_name = content_api.get_one(file_id, self._item_type).file_name
         cache_path = '/home/alexis/Pictures/cache/'
-        file = BytesIO()
-        file.write(file_content)
-        with open('{}{}'.format(cache_path, file_name), 'wb') as temp_file:
-            file.seek(0, 0)
-            buffer = file.read(1024)
-            while buffer:
-                temp_file.write(buffer)
-                buffer = file.read(1024)
 
         preview_manager = PreviewManager(cache_path, create_folder=True)
         path = preview_manager.get_jpeg_preview(
             file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
-            height=1000,
-            width=1000,
             page=page_id,
+            height=1500,
+            width=1500
         )
-        
-        try:
-            os.remove('{}{}'.format(cache_path, file_name))
-        except OSError:
-            pass
 
         with open(path, 'rb') as large:
             return large.read()
 
+    @expose(content_type='application/pdf')
+    def download_pdf_full(self, *args, **kwargs):
+        file_id = int(tg.request.controller_state.routing_args.get('file_id'))
 
+        # For now it's done through database content
+        # but soon it'll be with disk access
+
+        user = tmpl_context.current_user
+        content_api = ContentApi(
+            user,
+            show_archived=True,
+            show_deleted=True,
+        )
+        file_name = content_api.get_one(file_id, self._item_type).file_name
+        cache_path = '/home/alexis/Pictures/cache/'
+
+        preview_manager = PreviewManager(cache_path, create_folder=True)
+        path = preview_manager.get_pdf_preview(
+            file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
+        )
+
+        tg.response.headers['Content-Disposition'] = \
+            str('attachment; filename="{}"'.format(file_name))
+        with open(path, 'rb') as pdf:
+            return pdf.read()
+
+    @expose(content_type='application/pdf')
+    def download_pdf_one(self, page_id, *args, **kwargs):
+        file_id = int(tg.request.controller_state.routing_args.get('file_id'))
+        page_id = int(page_id)
+        # page_id = int(tg.request.controller_state.routing_args.get('page_id'))
+
+        # For now it's done through database content
+        # but soon it'll be with disk access
+
+        user = tmpl_context.current_user
+        content_api = ContentApi(
+            user,
+            show_archived=True,
+            show_deleted=True,
+        )
+        file_name = content_api.get_one(file_id, self._item_type).file_name
+
+        cache_path = '/home/alexis/Pictures/cache/'
+
+        preview_manager = PreviewManager(cache_path, create_folder=True)
+        path = preview_manager.get_pdf_preview(
+            file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
+            page=page_id,
+        )
+
+        tg.response.headers['Content-Disposition'] = \
+            str('attachment; filename="{}"'.format(file_name))
+        with open(path, 'rb') as pdf:
+            return pdf.read()
 
     @property
     def _item_type(self):
