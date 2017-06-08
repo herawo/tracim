@@ -274,6 +274,7 @@ def serialize_version_for_page_or_file(version: ContentRevisionRO, context: Cont
         owner = context.toDict(version.owner),
         created = version.created,
         action = context.toDict(version.get_last_action()),
+
     )
 
 
@@ -417,6 +418,7 @@ def serialize_node_for_page(content: Content, context: Context):
         return result
 
     if content.type==ContentType.Folder:
+
         value = DictLikeClass(
             id=content.content_id,
             label=content.label,

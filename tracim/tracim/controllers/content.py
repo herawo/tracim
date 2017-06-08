@@ -189,17 +189,32 @@ class UserWorkspaceFolderFileRestController(TIMWorkspaceContentRestController):
     @tg.expose('tracim.templates.file.getone')
     def get_one(self, file_id, revision_id=None):
         user = tmpl_context.current_user
+        file_id = int(file_id)
+        user = tmpl_context.current_user
+        workspace = tmpl_context.workspace
         content_api = ContentApi(
             user,
             show_archived=True,
             show_deleted=True,
         )
-        file_content = content_api.get_one(file_id,
-                                           self._item_type).file_content
+        if revision_id:
+            file_content = content_api.get_one_from_revision(file_id,  self._item_type, workspace, revision_id).file_content
+        else:
+            file_content = content_api.get_one(file_id, self._item_type, workspace).file_content
+
         file_name = content_api.get_one(file_id, self._item_type).file_name
         cache_path = '/home/alexis/Pictures/cache/'
         file = BytesIO()
         file.write(file_content)
+
+
+
+
+
+        current_user_content = Context(CTX.CURRENT_USER,
+                                       current_user=user).toDict(user)
+        current_user_content.roles.sort(key=lambda role: role.workspace.name)
+
 
         with open('{}{}'.format(cache_path, file_name), 'wb') as temp_file:
             file.seek(0, 0)
@@ -213,28 +228,15 @@ class UserWorkspaceFolderFileRestController(TIMWorkspaceContentRestController):
             file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
         )
 
-        file_id = int(file_id)
-        user = tmpl_context.current_user
-        workspace = tmpl_context.workspace
-
-        current_user_content = Context(CTX.CURRENT_USER,
-                                       current_user=user).toDict(user)
-        current_user_content.roles.sort(key=lambda role: role.workspace.name)
-
-        content_api = ContentApi(
-            user,
-            show_archived=True,
-            show_deleted=True,
-        )
-        if revision_id:
-            file = content_api.get_one_from_revision(file_id,  self._item_type, workspace, revision_id)
-        else:
-            file = content_api.get_one(file_id, self._item_type, workspace)
-
         fake_api_breadcrumb = self.get_breadcrumb(file_id)
         fake_api_content = DictLikeClass(breadcrumb=fake_api_breadcrumb, current_user=current_user_content)
         fake_api = Context(CTX.FOLDER,
                            current_user=user).toDict(fake_api_content)
+
+        if revision_id:
+            file = content_api.get_one_from_revision(file_id,  self._item_type, workspace, revision_id)
+        else:
+            file = content_api.get_one(file_id, self._item_type, workspace)
 
         dictified_file = Context(self._get_one_context,
                                  current_user=user).toDict(file, 'file')

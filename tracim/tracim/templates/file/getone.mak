@@ -101,7 +101,7 @@
 
     <div class="content__detail file">
         <div style="width: 15%;height: 100%;border:5px solid #606060;">
-            <img id = 'preview' alt="Preview" style="width:100%;height:100%">
+            <a id="preview_link"><img id='preview' alt="Preview" style="width:100%;height:100%"></a>
             <table style="width:100%;height:20%;">
                 <tr>
                     <td rowspan="2">
@@ -114,11 +114,10 @@
                         <button type="button" id="next" onclick="next_page()" style="width:100%;height:100%;"> + </button>
                     </td>
                 </tr>
+                <tr>
                     <td >
                         <a id="dl_full_pdf" style=""> Download all </a>
                     </td>
-                <tr>
-
                 </tr>
             </table>
 
@@ -141,8 +140,8 @@
                     console.log(urls[page]);
                     document.getElementById('preview').src = urls[page];
                     refresh_button();
-
                 }
+
                 function previous_page(){
                     page = page-1;
                     console.log('page previous');
@@ -150,12 +149,14 @@
                     document.getElementById('preview').src = urls[page];
                     refresh_button();
                 }
+
                 function refresh_button(){
                     console.log(page);
                     document.getElementById('prev').disabled = false;
                     document.getElementById('next').disabled = false;
                     document.getElementById('dl_one_pdf').href = "/previews/${result.file.id}/pages/" + page + "/download_pdf_one";
                     document.getElementById('dl_full_pdf').href = "/previews/${result.file.id}/pages/" + page + "/download_pdf_full";
+                    document.getElementById('preview_link').href = "/previews/${result.file.id}/pages/" + page + "/high_quality";
                     if(page >= nb_page-1){
                         document.getElementById('next').disabled = true;
                     }

@@ -38,8 +38,35 @@ class PagesController(TIMRestController):
         path = preview_manager.get_jpeg_preview(
             file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
             page=page_id,
-            height=1500,
-            width=1500
+            height=500,
+            width=500
+        )
+
+        with open(path, 'rb') as large:
+            return large.read()
+
+    @expose(content_type='image/jpeg')
+    def high_quality(self, page_id, *args, **kwargs):
+        file_id = int(tg.request.controller_state.routing_args.get('file_id'))
+
+        # For now it's done through database content
+        # but soon it'll be with disk access
+
+        user = tmpl_context.current_user
+        content_api = ContentApi(
+            user,
+            show_archived=True,
+            show_deleted=True,
+        )
+        file_name = content_api.get_one(file_id, self._item_type).file_name
+        cache_path = '/home/alexis/Pictures/cache/'
+
+        preview_manager = PreviewManager(cache_path, create_folder=True)
+        path = preview_manager.get_jpeg_preview(
+            file_path='/home/alexis/Pictures/cache/{}'.format(file_name),
+            page=page_id,
+            height=5000,
+            width=5000
         )
 
         with open(path, 'rb') as large:
